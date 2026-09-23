@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "drill",
+            "type": "pickString",
+            "description": "어떤 드릴?",
+            "options": [
+                "d0_warmup", "d1_pure", "d2_model", "d3_resource", "d4_pack",
+                "d5_tlv", "d6_mermaid", "d7_daemon", "d8_3gpp", "d9_final"
+            ],
+            "default": "d0_warmup"
+        },
+        {
+            "id": "target",
+            "type": "promptString",
+            "description": "타깃 이름(T=)",
+            "default": "main"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make D=${input:drill} T=${input:target}",
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "check (warnings+sanitizer)",
+            "type": "shell",
+            "command": "make D=${input:drill} T=${input:target} check",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "inputs": [
+        {
+            "id": "drill",
+            "type": "pickString",
+            "description": "어떤 드릴?",
+            "options": [
+                "d0_warmup", "d1_pure", "d2_model", "d3_resource", "d4_pack",
+                "d5_tlv", "d6_mermaid", "d7_daemon", "d8_3gpp", "d9_final"
+            ],
+            "default": "d0_warmup"
+        },
+        {
+            "id": "target",
+            "type": "promptString",
+            "description": "타깃 이름(T=)",
+            "default": "main"
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Debug drill (gdb, WSL)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/${input:drill}_${input:target}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "build"
+        }
+    ]
+}
