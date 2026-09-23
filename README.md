@@ -8,8 +8,18 @@ C 템플릿 체화 드릴(D0~D9) 실습 저장소. 문제/뼈대 스펙은 Notio
 
 ## 환경
 
+### Windows
+
 - 컴파일/실행/디버깅은 전부 **WSL2 Ubuntu** 안에서 한다 (POSIX 시그널·스레드·poll 때문에 네이티브 Windows에서는 일부 코드가 그대로 안 돌아감).
 - VS Code에서 `Ctrl+Shift+P` → `WSL: Reopen Folder in WSL` 로 이 폴더를 열면 이후 터미널·빌드·디버깅이 전부 Ubuntu 안에서 실행된다.
+- 디버깅 설정: `launch.json`의 "Debug drill (gdb, WSL)".
+
+### macOS
+
+- macOS는 그 자체로 POSIX(BSD 계열)라 WSL 같은 우회 레이어가 필요 없다. `xcode-select --install` 로 Command Line Tools(clang/make/lldb)만 설치하면 끝.
+- **gdb 대신 lldb**를 쓴다. VS Code에 [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) 확장을 설치하고, 디버깅 설정은 `launch.json`의 "Debug drill (lldb, macOS)"를 고른다.
+- Remote 확장 불필요 — 폴더를 그냥 열면 된다.
+- `c_cpp_properties.json`에서 IntelliSense 구성은 "macOS"를 선택(Apple Silicon 기준 `macos-clang-arm64`; 인텔 맥이면 `macos-clang-x64`로 바꿀 것).
 
 ## 사용법
 
