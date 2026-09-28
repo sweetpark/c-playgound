@@ -1,11 +1,11 @@
 # 사용법(WSL 안에서):  make D=d1_pure T=step1
 CC       := clang
-CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -g -Icommon
-SAN      := -fsanitize=address,undefined -fno-omit-frame-pointer
 D        ?= d1_pure
 T        ?= main
+CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -g -Icommon -I$(D)/src
+SAN      := -fsanitize=address,undefined -fno-omit-frame-pointer
 
-SRC      := $(wildcard $(D)/src/*.c)
+SRC      := $(wildcard $(D)/src/*.c $(D)/test/*.c)
 BIN      := build/$(D)_$(T)
 
 all: run
