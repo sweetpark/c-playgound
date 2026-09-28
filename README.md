@@ -1,10 +1,12 @@
 # c-playgound
 
-C 템플릿 체화 드릴(D0~D9) 실습 저장소. 문제/뼈대 스펙은 Notion 볼트의
-`템플릿 체화 드릴` 노트를 따른다 — 여기는 실제로 손으로 치는 코드만 둔다.
+C 템플릿 체화 드릴(D0~D9)과 시큐어코딩 체화 드릴(SD01~SD58) 실습 저장소.
+문제/뼈대 스펙은 Notion 볼트의 각 드릴 노트를 따른다 — 여기는 실제로 손으로 치는 코드만 둔다.
 
 - [c코드 템플릿 (블로그)](https://sweetpark.github.io/개발-(cs)/언어/c언어/c코드-템플릿/c코드-템플릿-목록) — 드릴이 체화시키려는 뼈대 원본
 - [템플릿 체화 드릴 (블로그)](https://sweetpark.github.io/개발-(cs)/언어/c언어/실습/템플릿-체화-드릴/템플릿-체화-드릴-목록) — D0~D9 드릴 스펙, 회차 규칙, 채점표
+- [시큐어코딩가이드 (블로그)](https://sweetpark.github.io/개발-(cs)/언어/c언어/시큐어코딩가이드/시큐어코딩가이드-목록) — 58개 취약점의 Bad→Good 치환 원본(전자정부 C 시큐어코딩 가이드 기반)
+- [시큐어코딩 체화 드릴 (블로그)](https://sweetpark.github.io/개발-(cs)/언어/c언어/실습/시큐어코딩-체화-드릴/readme) — SD01~SD58 드릴 스펙, 재현 전략, 회차 규칙, 채점표
 
 ## 환경
 
@@ -24,8 +26,8 @@ C 템플릿 체화 드릴(D0~D9) 실습 저장소. 문제/뼈대 스펙은 Notio
 ## 사용법
 
 ```bash
-make D=d1_pure T=main        # 빌드 + 실행
-make D=d1_pure T=main check  # 경고 0 + 새니타이저 0 검사
+make D=d1_pure T=main            # 빌드 + 실행 (템플릿 체화 드릴)
+make D=sd01_sqli T=main check    # 경고 0 + 새니타이저 0 검사 (시큐어코딩 체화 드릴)
 make clean
 ```
 
@@ -33,8 +35,13 @@ VS Code에서는 `Ctrl+Shift+B`(빌드) 또는 `F5`(디버깅)를 누르면 드�
 
 ## 폴더
 
-각 드릴은 `d?_이름/src/`, `d?_이름/test/` 를 쓴다. 공용 헤더(`common.h`/`guard.h`/`log.h`)는
+각 드릴은 `d?_이름/src/`, `d?_이름/test/` 를 쓴다(시큐어코딩 체화 드릴은 같은 자리에 `sd??_이름/src/`, `sd??_이름/test/`). 공용 헤더(`common.h`/`guard.h`/`log.h`)는
 `common/`에 두되, D0(워밍업)만은 매번 백지에서 새로 친다.
+
+시큐어코딩 체화 드릴 중 일부(`sd01_sqli`, `sd04_oscmd`, `sd05_ldapinj`, `sd07_ldapbase`,
+`sd08_cookietamper`, `sd20_idor`, `sd26_hckey` 등)는 `src/` 아래에 `mock_*.h`/`.c` 환경 코드가
+미리 포함돼 있다 — 실제 DB·LDAP·세션 저장소 없이 취약점을 재현하기 위한 최소한의 스텁이며,
+직접 타이핑하는 대상이 아니다. Bad/Good 구현과 `test/`는 노트 스펙을 보고 직접 친다.
 
 ## 커밋 컨벤션 — 반복(체화) 기록
 
