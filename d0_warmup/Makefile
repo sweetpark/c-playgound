@@ -1,6 +1,6 @@
 # 사용법 (WSL / macOS 공통, d0_warmup 디렉터리에서 실행): make
-CC       := clang
-CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -g -I../common -Wno-gnu-zero-variadic-macro-arguments
+CC       := gcc
+CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -D_POSIX_C_SOURCE=200809L -g -I../common
 SAN      := -fsanitize=address,undefined -fno-omit-frame-pointer
 
 SRC      := main.c
