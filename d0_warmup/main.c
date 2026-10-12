@@ -25,12 +25,12 @@ static int take_res(const char *path){
     CHK_PTR(path);
 
     buf = calloc(1, 64);
-    CHK_PTR_GOTO(buf, CLEANUP);
+    CHK_PTR_GOTO(buf, ret, CLEANUP);
 
     fp = fopen(path, "r");
-    CHK_COND_GOTO(fp != NULL, RET_IO_ERROR, CLEANUP);
+    CHK_COND_GOTO(fp != NULL, RET_IO_ERROR, ret, CLEANUP);
 
-    CHK_RET_GOTO(take_ptr("inner", 10), CLEANUP);
+    CHK_RET_GOTO(take_ptr("inner", 10), ret, CLEANUP);
     ret = RET_OK;
 
 CLEANUP:

@@ -43,32 +43,35 @@
         }                                                               \
     } while (0)
  
-/* ── goto 로 빠지는 가드 (자원을 이미 잡았을 때) ── */
+/* ── goto 로 빠지는 가드 (자원을 이미 잡았을 때) ──
+ *  _rv    : 결과를 담을 변수 (호출 함수의 ret_t 지역변수. 보통 ret)
+ *  _label : 빠져나갈 정리 라벨
+ * ──────────────────────────────────────────────────── */
  
-#define CHK_PTR_GOTO(_p, _label)                                        \
+#define CHK_PTR_GOTO(_p, _rv, _label)                                   \
     do {                                                                \
         if ((_p) == NULL) {                                             \
             LOG_ERR("%s is NULL (%s/%d)", #_p, __func__, __LINE__);     \
-            ret = RET_INVALID_ARG;                                      \
+            (_rv) = RET_INVALID_ARG;                                    \
             goto _label;                                                \
         }                                                               \
     } while (0)
- 
-#define CHK_RET_GOTO(_expr, _label)                                     \
+
+#define CHK_RET_GOTO(_expr, _rv, _label)                                \
     do {                                                                \
-        ret = (_expr);                                                  \
-        if (ret != RET_OK) {                                            \
+        (_rv) = (_expr);                                                \
+        if ((_rv) != RET_OK) {                                          \
             LOG_ERR("%s failed: %s(%d) (%s/%d)",                        \
-                    #_expr, ret_str(ret), ret, __func__, __LINE__);     \
+                    #_expr, ret_str(_rv), (_rv), __func__, __LINE__);   \
             goto _label;                                                \
         }                                                               \
     } while (0)
- 
-#define CHK_COND_GOTO(_cond, _ret, _label)                              \
+
+#define CHK_COND_GOTO(_cond, _code, _rv, _label)                        \
     do {                                                                \
         if (!(_cond)) {                                                 \
             LOG_ERR("cond(%s) failed (%s/%d)", #_cond, __func__, __LINE__); \
-            ret = (_ret);                                               \
+            (_rv) = (_code);                                            \
             goto _label;                                                \
         }                                                               \
     } while (0)
