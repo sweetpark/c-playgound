@@ -18,7 +18,7 @@ typedef enum{
     LOG_LV_WRN=1,
     LOG_LV_INF=2,
     LOG_LV_DBG=3,
-} log_level_t
+} log_level_t;
 
 extern log_level_t g_log_level; /* Runtime에 바꿀 수 있게 전역 */
 
