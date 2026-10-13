@@ -2,7 +2,7 @@
 CC       := clang
 D        ?= d1_pure
 T        ?= main
-CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -g -Icommon -I$(D)/src
+CFLAGS   := -Wall -Wextra -Werror -pedantic -std=c11 -D_POSIX_C_SOURCE=200809L -g -Icommon -I$(D)/src
 SAN      := -fsanitize=address,undefined -fno-omit-frame-pointer
 
 SRC      := $(wildcard $(D)/src/*.c $(D)/test/*.c)
