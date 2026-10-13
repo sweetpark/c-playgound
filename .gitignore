@@ -3,3 +3,5 @@ build/
 *.out
 tags
 cscope.*
+# c_basic/str/str_ex 실행 시 생성되는 시연 파일
+base_name_*
