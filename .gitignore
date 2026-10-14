@@ -6,3 +6,8 @@ cscope.*
 # c_basic/str/str_ex 실행 시 생성되는 시연 파일
 base_name_*
 .env
+
+# c_basic/sig 실행 시 생성되는 파일
+count.txt
+default.log
+*.log
