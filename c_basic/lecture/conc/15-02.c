@@ -11,10 +11,7 @@ pthread_mutex_t mp;
 int verify_balance(int amount) {
 	if (account_balance - amount < MIN_BALANCE) {
 		printf("Low balance(%d)\n", account_balance) ;
-		if (pthread_mutex_unlock(&mp) != 0) {
-			printf("pthread_mutex_unlock fail\n") ;
-		}
-		// return 문이 pthread_mutex_unlock if 구문 안에 있어야함
+		/* 락은 잡은 함수(debit)가 푼다. 여기서 unlock 하면 debit 에서 또 풀게 된다 */
 		return -1;
 	}
 	return 0;
@@ -26,7 +23,6 @@ void debit(int amount) {
 		return ;
 	}
 	if (verify_balance(amount) == -1) {
-		// unlock 호출 2번
 		if (pthread_mutex_unlock(&mp) != 0) {
 			printf("pthread_mutex_unlock fail\n") ;
 		}
@@ -51,7 +47,7 @@ void *account_debit(void *ptr) {
 
 int main(void){
 	pthread_t thr[2];
-	size_t i ;
+	size_t i, created = 0 ;
 	int ret ;
 
 	if( pthread_mutex_init(&mp, NULL) != 0 ) {
@@ -64,11 +60,12 @@ int main(void){
 	for ( i = 0; i < 2; ++i) {
 		if (pthread_create(&(thr[i]), NULL, account_debit, NULL) != 0) {
 			fprintf(stderr, "Creation of thread %zu failed\n", i);
-			return ;
+			break ;
 		}
+		created++ ;
 	}
 
-	for( i = 0; i < 2; ++i ) {
+	for( i = 0; i < created; ++i ) {
 		if( pthread_join(thr[i], NULL ) != 0 ) {
 			printf("pthread_join fail\n") ;
 		}

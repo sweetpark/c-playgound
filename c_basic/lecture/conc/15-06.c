@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
  
 pthread_mutex_t mutex ;
 static int a = 0 ;
@@ -60,34 +61,27 @@ int get_product(int *product) {
 }
 
 int multiply_monomials(int x1, int x2) {
-	int sum, product ;
+	int sum = 0, product = 0, rc = 1 ;
 
-#if 1
 	if(pthread_mutex_lock(&mutex) != 0){
 		fprintf(stderr, "pthread_mutex_lock fail\n");
 		return -1;
 	}
-#endif
 
+	/* set → get_sum → get_product 를 한 임계구역으로 묶는다 */
 	set_values(x1, x2) ;
-	printf("[%u] (x+%d)(x+%d)\n", pthread_self(), x1, x2) ;
-	
-	if( get_sum( &sum ) < 0 ) {
-		return -1 ;
+	if( get_sum( &sum ) < 0 || get_product( &product ) < 0 ) {
+		rc = -1 ;		/* 에러 경로에서도 아래에서 unlock 한다 */
 	}
 
-	if(get_product( &product ) < 0 ) {
-		return -1 ;
-	}
-
-#if 1
 	if(pthread_mutex_unlock(&mutex)!=0){
 		fprintf(stderr, "pthread_mutex_unlock fail\n");
 		return -1;
 	}
-#endif
-	printf("[%u] = x^2 + %dx + %d\n", pthread_self(), sum, product ) ;
 
+	if( rc < 0 ) return -1 ;
+
+	printf("[%lu] (x+%d)(x+%d) = x^2 + %dx + %d\n", (unsigned long)pthread_self(), x1, x2, sum, product ) ;
 	return 1;
 }
 
@@ -106,7 +100,7 @@ void *thread_foo(void *ptr) {
 int main(void){
 	pthread_t thr[10];
 	size_t i ;
-	size_t thrno = 10 ;
+	size_t thrno = 10, created = 0 ;
 	if( pthread_mutex_init(&mutex, NULL) != 0 ) {
 		printf("pthread_mutex_init fail\n" ) ;
 		return 1 ;
@@ -115,11 +109,12 @@ int main(void){
 	for( i = 0; i < thrno ; i++ ) {
 		if (pthread_create(&thr[i], NULL, thread_foo,(void *)i) != 0) {
 			fprintf(stderr, "Creation of thread failed\n");
-			return 1 ;
+			break ;
 		}
+		created++ ;
 	}
 
-	for( i = 0; i < thrno ; i++ ) {
+	for( i = 0; i < created ; i++ ) {
 		if( pthread_join( thr[i], NULL ) != 0 ) {
 			fprintf(stderr, "thread join fail\n" ) ;
 		}

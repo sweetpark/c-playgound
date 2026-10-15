@@ -232,16 +232,30 @@ int main(void)
 	unsigned long total_success = 0, total_fail = 0;
 	int rc = 0;						/* 프로그램 종료 코드 */
 
-	/* 1. 계좌 10개 초기화: 잔액 1000 + 계좌별 mutex */
+	pthread_mutexattr_t attr;
+
+	/* 1. 계좌 10개 초기화: 잔액 1000 + 계좌별 mutex
+	 *    mutex 는 ERRORCHECK 타입: 잘못된 unlock(EPERM)·재lock(EDEADLK)을 에러로 돌려준다 */
+	if ((ret = pthread_mutexattr_init(&attr)) != 0) {
+		printf("pthread_mutexattr_init fail(%d)\n", ret);
+		return 1;
+	}
+	if ((ret = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK)) != 0) {
+		printf("pthread_mutexattr_settype fail(%d)\n", ret);
+		pthread_mutexattr_destroy(&attr);
+		return 1;
+	}
 	for (i = 0; i < ACCOUNT_CNT; i++) {
 		g_accounts[i].balance = INIT_BALANCE;
-		if ((ret = pthread_mutex_init(&g_accounts[i].lock, NULL)) != 0) {
+		if ((ret = pthread_mutex_init(&g_accounts[i].lock, &attr)) != 0) {
 			printf("pthread_mutex_init fail(%d), account=%d\n", ret, i);
 			rc = 1;
+			pthread_mutexattr_destroy(&attr);
 			goto cleanup;
 		}
 		init_ok++;
 	}
+	pthread_mutexattr_destroy(&attr);
 
 	printf("start: accounts=%d, init total=%d, run=%dsec\n", ACCOUNT_CNT, INIT_TOTAL_BALANCE, RUN_SEC);
 
