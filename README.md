@@ -53,3 +53,19 @@ VS Code에서는 `Ctrl+Shift+B`(빌드) 또는 `F5`(디버깅)를 누르면 드�
 - **커밋 메시지 형식**: `<드릴> r<회차>(<변형>) <소요시간> <자가채점점수>`
   예: `d1_pure r2(B) 8min 95pt`
 - `build/`는 gitignore 대상이라 신경 쓸 필요 없음.
+
+## D1~D8 변형 A 모범답안
+각 드릴의 `src/`(답안) · `test/`(시험)는 노트의 변형 A 모범답안과 시험을 조립해 **gcc 15 / `-Wall -Wextra -Werror` / ASan·UBSan·LSan 0 으로 PASS 확인**한 것이다.
+D6 은 코드가 아니라 Mermaid, D9 는 답안 대신 회고라 없다. D7 은 큐 단위 시험(`jobq`)만 있다(데몬 시나리오 `run.sh` 는 미포함).
+답안이 조각으로만 있던 부분(D2 확장·D3 getter·D5 `tlv_build`·D8 변환/JSON 함수)은 노트의 조각을 이어 붙이고 빠진 부분을 채워 넣었다.
+
+```bash
+make -f Makefile.drill D=d1_pure V=msisdn
+make -f Makefile.drill D=d2_model V=subs_type
+make -f Makefile.drill D=d3_resource V=cfg
+make -f Makefile.drill D=d4_pack V=msg
+make -f Makefile.drill D=d5_tlv V=tlv
+make -f Makefile.drill D=d7_daemon V=jobq SRC="d7_daemon/src/jobq.c d7_daemon/test/test_jobq.c"
+make -f Makefile.drill D=d8_3gpp V=am SRC="d8_3gpp/src/am.c d8_3gpp/test/test_am.c" LDLIBS="-pthread -ljansson"   # libjansson-dev 필요
+```
+(`Makefile.drill` 은 gcc 기준 공통 Makefile, 기존 `Makefile` 은 clang 기준이라 따로 둠. 시험 파일은 `build/` 에 임시 파일을 쓰므로 `make` 가 만드는 `build/` 안에서 실행됨)

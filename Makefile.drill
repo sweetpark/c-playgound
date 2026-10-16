@@ -1,0 +1,35 @@
+# ~/cdrill/Makefile
+# 사용법:  make D=d1_pure V=msisdn
+#   파일이 여러 개일 때:  make D=d4_pack V=msgx SRC="d4_pack/src/msg.c d4_pack/src/body.c d4_pack/test/test_msgx.c"
+#   데몬(빌드만):         make D=d7_daemon V=daemon SRC="$(ls d7_daemon/src/*.c)" build/d7_daemon_daemon
+#   외부 라이브러리:      make ... LDLIBS="-pthread -ljansson"
+CC       := gcc
+CFLAGS   := -Wall -Wextra -Werror -std=c11 -D_POSIX_C_SOURCE=200809L -g -DUNIT_TEST -Icommon -I$(D)/src
+SAN      := -fsanitize=address,undefined -fno-omit-frame-pointer
+LDLIBS   ?= -pthread
+
+D        ?= d1_pure
+V        ?= main
+SRC      ?= $(D)/src/$(V).c $(D)/test/test_$(V).c
+BIN      := build/$(D)_$(V)
+
+all: run
+
+build:
+	@mkdir -p build
+
+$(BIN): build $(SRC)
+	$(CC) $(CFLAGS) $(SAN) $(SRC) $(LDLIBS) -o $(BIN)
+
+run: $(BIN)
+	@echo "── run ──────────────────────────────"
+	@./$(BIN)
+
+# 위생 검사: 경고 0 + 새니타이저 0 이어야 통과
+check: $(BIN)
+	@./$(BIN) && echo "PASS" || (echo "FAIL"; exit 1)
+
+clean:
+	rm -rf build
+
+.PHONY: all run check clean build
