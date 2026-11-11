@@ -1,31 +1,31 @@
 # c_basic
 
 C 기초 강의(문자열·동적 메모리·파일 I/O·환경변수·시그널·에러 처리·API 설계·동시성·바이트 순서·컴파일러 경고) 실습 코드. 오류가 있는 강의 코드를 고쳐 보고, 직접 구현하며 개선한 최종 버전을 둔다.
-(템플릿·시큐어코딩 체화 드릴은 상위 폴더의 `d?_*`, `sd??_*`를 쓴다 — 이 폴더는 별개)
+> 이 폴더는 **문제의 소재(원본 코드)** 이고 채점은 하지 않는다. 풀어 보는 문제는 `drill/Pxxx_*`(`make Pxxx`) 이며, 아래 표의 **대응 문제** 열이 이 폴더 ↔ 문제 연결이다. 템플릿·시큐어코딩 드릴(P038~P103)은 이 폴더와 별개다.
 
 ## 구성
 
-| 폴더 | 파일 | 내용 | 블로그 노트 |
-|---|---|---|---|
-| `str/` | `str_ex.c` | `my_strncpy`, `my_strncat`, `make_filename` | 문자열 함수 실습 |
-| `mem/` | `mem_ex.c` | 유연 배열 구조체 + `realloc` 이중 포인터 `append` | 동적 메모리 실습 |
-| `mem/` | `linkedlist.c` | node + list 구조체 연결리스트 (유연 배열 멤버) | 동적 메모리 실습 |
-| `fio/` | `fio_ex.c` | `stat` 검사 + 임시파일 + `rename`으로 공백 제거 복사 | 파일 입출력 실습 |
-| `fio/` | `fio_ex2.c` | 줄 수·최대 길이 + 줄 번호 붙여 저장 | 파일 입출력 실습 |
-| `env/` | `env_ex.c` | `LOG_PATH` 로그 기록기 (`open`+`fdopen`, `atexit` clean-up) | 환경변수·시그널 실습 |
-| `env/` | `env_ex2_v1.c`, `env_ex2_v2.c` | PATH 탐색기(which). v1 = 초안, v2 = `strtok` 대신 직접 분리·빈 항목 `.`·`atexit` | 환경변수·시그널 실습 |
-| `sig/` | `sig_ex.c`, `sig_ex_v2.c` | 1초 카운터. v2 = `sigaction` + `nanosleep` 남은 시간 재대기 | 환경변수·시그널 실습 |
-| `sig/` | `sig_ex2.c`, `sig_ex2_v2.c` | 시그널로 운영되는 카운터. v2 = `sigprocmask` + `pselect` 절대 시각 | 환경변수·시그널 실습 |
-| `err/` | `my_atoi.c` | `strtol` 로 만든 예외 반환 atoi (main 없음, 컴파일만 검사) | 에러 처리·API 설계 실습 |
-| `err/` | `snprintf.c` | in-band 에러를 없앤 가변 인자 `snprintf_m` (main 없음) | 에러 처리·API 설계 실습 |
-| `err/` | `sum.c` | `sum_file` + `main` : 줄 단위 합계, `SUM_E*` 에러 코드 | 에러 처리·API 설계 실습 |
-| `api/` | `conformant.c` | conformant 배열 파라미터 `improved_strncpy/strncat` (main 없음) | 에러 처리·API 설계 실습 |
-| `conc/` | `con_ex.c` | 이체 스레드 4 + 감시 스레드 1 + main. 계좌별 mutex, 락 획득 순서 고정(번호 오름차순), 전체 락 스냅샷으로 합계 검사, 스레드별 통계, atomic 종료 flag | 동시성·스레드 실습 |
-| `conc/msgq/` | `15-00-main.c`, `15-00-q.c`, `15-00-q.h` | 스레드 안전 메시지 큐(mutex + 조건변수 2개 + `close_q`)와 producer/consumer. SIGINT/SIGTERM은 `sigwait` 전용 스레드가 받아 `close_q` 호출. 원본은 `#else`, 수정본은 `#if MODIFY` | 동시성·스레드 실습 |
-| `msc/` | `byteorder.c` | 64비트 `htonll`/`ntohll` + 네트워크 순서·왕복·`__builtin_bswap64` 검증 | 바이트 순서·컴파일러 경고 실습 |
-| `msc/` | `enc_dec.h`, `enc_dec.c` | 16바이트 메시지 헤더 encode/decode (필드 단위 변환, 원인별 음수 에러, 실패 시 출력 불변), `msg_type_str` | 바이트 순서·컴파일러 경고 실습 |
-| `msc/` | `enc_dec_test.c` | 위 모듈의 테스트 프로그램 (hex 출력, 왕복, 에러 리턴, 34개 검사) | 바이트 순서·컴파일러 경고 실습 |
-| `lecture/` | `8-xx` ~ `16-xx` | 강의에서 제공된 코드 (수정·주석 포함). `conc/`은 15-01 ~ 15-15, `msc/`는 16-01 ~ 16-05와 `tag_length_value.c`(코드 리뷰 과제) | 각 노트 본문 인용 |
+| 폴더 | 파일 | 내용 | 블로그 노트 | 대응 문제 |
+|---|---|---|---|---|
+| `str/` | `str_ex.c` | `my_strncpy`, `my_strncat`, `make_filename` | 문자열 함수 실습 | P003, P004 |
+| `mem/` | `mem_ex.c` | 유연 배열 구조체 + `realloc` 이중 포인터 `append` | 동적 메모리 실습 | P012 |
+| `mem/` | `linkedlist.c` | node + list 구조체 연결리스트 (유연 배열 멤버) | 동적 메모리 실습 | P008 |
+| `fio/` | `fio_ex.c` | `stat` 검사 + 임시파일 + `rename`으로 공백 제거 복사 | 파일 입출력 실습 | P019 |
+| `fio/` | `fio_ex2.c` | 줄 수·최대 길이 + 줄 번호 붙여 저장 | 파일 입출력 실습 | P019 |
+| `env/` | `env_ex.c` | `LOG_PATH` 로그 기록기 (`open`+`fdopen`, `atexit` clean-up) | 환경변수·시그널 실습 | P020 |
+| `env/` | `env_ex2_v1.c`, `env_ex2_v2.c` | PATH 탐색기(which). v1 = 초안, v2 = `strtok` 대신 직접 분리·빈 항목 `.`·`atexit` | 환경변수·시그널 실습 | P021 |
+| `sig/` | `sig_ex.c`, `sig_ex_v2.c` | 1초 카운터. v2 = `sigaction` + `nanosleep` 남은 시간 재대기 | 환경변수·시그널 실습 | P022 |
+| `sig/` | `sig_ex2.c`, `sig_ex2_v2.c` | 시그널로 운영되는 카운터. v2 = `sigprocmask` + `pselect` 절대 시각 | 환경변수·시그널 실습 | P023 |
+| `err/` | `my_atoi.c` | `strtol` 로 만든 예외 반환 atoi (main 없음, 컴파일만 검사) | 에러 처리·API 설계 실습 | P013, P015 |
+| `err/` | `snprintf.c` | in-band 에러를 없앤 가변 인자 `snprintf_m` (main 없음) | 에러 처리·API 설계 실습 | P037 |
+| `err/` | `sum.c` | `sum_file` + `main` : 줄 단위 합계, `SUM_E*` 에러 코드 | 에러 처리·API 설계 실습 | P034 |
+| `api/` | `conformant.c` | conformant 배열 파라미터 `improved_strncpy/strncat` (main 없음) | 에러 처리·API 설계 실습 | P033 |
+| `conc/` | `con_ex.c` | 이체 스레드 4 + 감시 스레드 1 + main. 계좌별 mutex, 락 획득 순서 고정(번호 오름차순), 전체 락 스냅샷으로 합계 검사, 스레드별 통계, atomic 종료 flag | 동시성·스레드 실습 | P024, P025 |
+| `conc/msgq/` | `15-00-main.c`, `15-00-q.c`, `15-00-q.h` | 스레드 안전 메시지 큐(mutex + 조건변수 2개 + `close_q`)와 producer/consumer. SIGINT/SIGTERM은 `sigwait` 전용 스레드가 받아 `close_q` 호출. 원본은 `#else`, 수정본은 `#if MODIFY` | 동시성·스레드 실습 | P026 |
+| `msc/` | `byteorder.c` | 64비트 `htonll`/`ntohll` + 네트워크 순서·왕복·`__builtin_bswap64` 검증 | 바이트 순서·컴파일러 경고 실습 | P029 |
+| `msc/` | `enc_dec.h`, `enc_dec.c` | 16바이트 메시지 헤더 encode/decode (필드 단위 변환, 원인별 음수 에러, 실패 시 출력 불변), `msg_type_str` | 바이트 순서·컴파일러 경고 실습 | P030 |
+| `msc/` | `enc_dec_test.c` | 위 모듈의 테스트 프로그램 (hex 출력, 왕복, 에러 리턴, 34개 검사) | 바이트 순서·컴파일러 경고 실습 | P030 |
+| `lecture/` | `8-xx` ~ `16-xx` | 강의에서 제공된 코드 (수정·주석 포함). `conc/`은 15-01 ~ 15-15, `msc/`는 16-01 ~ 16-05와 `tag_length_value.c`(코드 리뷰 과제) | 각 노트 본문 인용 | — |
 
 각 파일은 독립된 프로그램이다. 버전은 파일을 덮어쓰고 커밋하는 방식으로 git 히스토리에 남긴다.
 
