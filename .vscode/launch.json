@@ -2,20 +2,10 @@
     "version": "0.2.0",
     "inputs": [
         {
-            "id": "drill",
-            "type": "pickString",
-            "description": "어떤 드릴?",
-            "options": [
-                "d0_warmup", "d1_pure", "d2_model", "d3_resource", "d4_pack",
-                "d5_tlv", "d6_mermaid", "d7_daemon", "d8_3gpp", "d9_final"
-            ],
-            "default": "d0_warmup"
-        },
-        {
-            "id": "target",
+            "id": "problem",
             "type": "promptString",
-            "description": "타깃 이름(T=)",
-            "default": "main"
+            "description": "문제 번호 (예: P001)",
+            "default": "P001"
         }
     ],
     "configurations": [
@@ -23,7 +13,7 @@
             "name": "Debug drill (gdb, WSL)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${input:drill}_${input:target}",
+            "program": "${workspaceFolder}/build/${input:problem}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -37,7 +27,7 @@
             "name": "Debug drill (lldb, macOS)",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${input:drill}_${input:target}",
+            "program": "${workspaceFolder}/build/${input:problem}",
             "args": [],
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "build"
