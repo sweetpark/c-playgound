@@ -72,7 +72,7 @@ make verify            # 전 문제 채점 가능성 검증 (모범답안 PASS +
 | `drill/Pxxx_이름/` | **하루 한 문제** 형식의 문제 한 장 (위 참조). `drill/drill_test.h` 는 `CHECK`/`PASS n/m` 헬퍼, `drill/verify.sh` 는 전체 검증 |
 | `solutions/Pxxx_이름/` | 모범답안(`solution.c`)과 백지 원본(`skeleton.c`) — 풀기 전에는 열지 않는다 |
 | `c_basic/` | 원본 C 기초 강의 실습 코드 (문제의 소재. 수정하지 않는다) |
-| `common/` | 공용 헤더 (`common.h`/`guard.h`/`log.h`/`safe.h`/`mem.h`/`strx.h`) |
+| `drill/common/` | 공용 헤더 (P038–P045 가 쓴다) (`common.h`/`guard.h`/`log.h`/`safe.h`/`mem.h`/`strx.h`) |
 | `MISTAKES.md`, `PROGRESS.md` | 틀린 것 기록 / 진행 현황 |
 | `Makefile` | `make P001` 등 (위 참조) |
 

@@ -1,7 +1,7 @@
 # P038 · d0 워밍업 — 가드와 CLEANUP 뼈대
 
 ## 요구사항
-템플릿 체화 드릴 D0(워밍업). 저장소 `common/` 의 공통 뼈대(`common.h` 리턴코드, `guard.h` 가드 매크로, `log.h`, `safe.h` 정리 매크로)를 **백지에서 손으로** 써 본다. 함수 둘:
+템플릿 체화 드릴 D0(워밍업). `drill/common/` 의 공통 뼈대(`common.h` 리턴코드, `guard.h` 가드 매크로, `log.h`, `safe.h` 정리 매크로)를 **백지에서 손으로** 써 본다. 함수 둘:
 1. `take_ptr(s, v)` — 인자 가드 두 개. `s` 가 NULL 이면, `v` 가 0~100 을 벗어나면 `RET_INVALID_ARG`. 통과하면 로그를 남기고 `RET_OK`.
 2. `take_res(path)` — 자원을 잡는 함수. `buf`(힙 64바이트)를 잡고 `path` 를 `fopen("r")`. 중간에 실패하면 **한 곳(`CLEANUP:`)** 에서 `fclose` / `free` 하고 나간다. `fopen` 실패는 `RET_IO_ERROR`. 성공하면 안에서 `take_ptr("inner", 10)` 을 부르고 그 결과를 따른다.
 

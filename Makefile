@@ -10,7 +10,7 @@
 #   make reset-P001      solution.c 를 백지로 되돌림 (반복 연습용, 작성 중인 내용은 사라짐)
 #   make list            문제 목록 / make verify  전체 채점 가능성 검증
 DRILL_CC     ?= gcc
-DRILL_CFLAGS := -Wall -Wextra -Werror -std=c11 -D_POSIX_C_SOURCE=200809L -g -DUNIT_TEST -Icommon -Idrill
+DRILL_CFLAGS := -Wall -Wextra -Werror -std=c11 -D_POSIX_C_SOURCE=200809L -g -DUNIT_TEST -Idrill/common -Idrill
 DRILL_SAN    := -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
 DRILL_LDLIBS ?= -pthread
 

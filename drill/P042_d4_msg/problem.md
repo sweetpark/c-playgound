@@ -84,7 +84,7 @@ int msg_unpack(const uint8_t *buf, size_t buf_len, msg_t *out, size_t *consumed)
 
 ## 제약
 
-- 공통 헤더(`common.h`, `guard.h`, `log.h`, `safe.h`)의 가드·단일 출구·`goto CLEANUP` 패턴을 쓴다(저장소 `common/`).
+- 공통 헤더(`common.h`, `guard.h`, `log.h`, `safe.h`)의 가드·단일 출구·`goto CLEANUP` 패턴을 쓴다(`drill/common/`).
 - 실패하면 출력 구조체는 0 (쓰레기를 남기지 않는다) 등 표의 규칙을 그대로 지킨다.
 - 경고 0, ASan/UBSan/LSan 0 (`-Wall -Wextra -Werror`).
 
