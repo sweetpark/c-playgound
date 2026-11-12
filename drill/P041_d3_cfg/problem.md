@@ -14,7 +14,7 @@
 >   앞뒤 공백은 **제거**.
 > - 같은 key 가 두 번 나오면 **나중 것이 이긴다**.
 > - 항목 개수 상한은 **없다** (동적 확장).
-> - **필수 키**: `listen_port`(1~65535), `worker_num`(1~64).
+> - **필수 키**: `listen_port`(1–65535), `worker_num`(1–64).
 >   없으면 로딩 실패.
 > - 파일이 없으면 `RET_IO_ERROR`, 형식 위반은 `RET_BAD_FORMAT`, 할당 실패는 `RET_NO_MEM`.
 > - 조회 API: `cfg_get_str(cfg, key, &out)` / `cfg_get_int(cfg, key, &out)`.

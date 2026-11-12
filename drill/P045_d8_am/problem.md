@@ -103,7 +103,7 @@
 
 | 함수 | 요구사항 |
 | :--- | :--- |
-| `int am_req_parse(const char *url, am_data_req_t *out)` | `/subscriber-data/{supi}/am-data?plmn-id={plmn}&supported-features={feat}` 를 파싱한다.<br>`supi` 는 `imsi-` + 숫자 15자.<br>`plmn-id` 는 숫자 5~6자 (mcc 3 + mnc 2~3).<br>`supported-features` 는 16진수 문자열 (최대 16자).<br>**없는 쿼리는 `has_` 를 끈다.** |
+| `int am_req_parse(const char *url, am_data_req_t *out)` | `/subscriber-data/{supi}/am-data?plmn-id={plmn}&supported-features={feat}` 를 파싱한다.<br>`supi` 는 `imsi-` + 숫자 15자.<br>`plmn-id` 는 숫자 5–6자 (mcc 3 + mnc 2–3).<br>`supported-features` 는 16진수 문자열 (최대 16자).<br>**없는 쿼리는 `has_` 를 끈다.** |
 | `int am_req_validate(const am_data_req_t *req, bool roaming)` | `roaming` 인데 `plmnId` 가 없으면 `RET_INVALID_ARG` |
 | `int am_rsp_parse(json_t *root, am_data_rsp_t *out)` | 응답 JSON → 구조체.<br>`nssai` 가 없으면 `RET_INVALID_ARG`, 타입이 틀리면 `RET_BAD_FORMAT`.<br>**모르는 최상위 키는 `unknown[]` 에 원문(JSON 문자열)으로 보관**한다 (8개 초과는 WRN 후 버림). |
 | `int am_rsp_build(const am_data_rsp_t *in, json_t **out)` | 구조체 → JSON.<br>**보관한 모르는 키를 그대로 되돌려 넣는다 (echo).**<br>`subscribedUeAmbr` 는 `"100 Mbps"` 형식으로 쓴다. |

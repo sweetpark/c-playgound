@@ -1,6 +1,6 @@
 # c-playgound
 
-C 템플릿 체화 드릴(D0~D9)과 시큐어코딩 체화 드릴(SD01~SD58) 실습 저장소.
+C 템플릿 체화 드릴(D0–D9)과 시큐어코딩 체화 드릴(SD01–SD58) 실습 저장소.
 문제/뼈대 스펙은 Notion 볼트의 각 드릴 노트를 따른다 — 여기는 실제로 손으로 치는 코드만 둔다.
 
 - [c코드 템플릿 (블로그)](https://sweetpark.github.io/개발-(cs)/언어/c언어/c코드-템플릿/c코드-템플릿-목록) — 드릴이 체화시키려는 뼈대 원본
@@ -10,7 +10,7 @@ C 템플릿 체화 드릴(D0~D9)과 시큐어코딩 체화 드릴(SD01~SD58) 실
 
 ## 오늘의 한 문제 (하루 30분 루틴)
 
-코딩테스트처럼 **문제 한 장 = 폴더 하나**. 오늘 뭘 할지 고르지 않는다 — [PROGRESS.md](PROGRESS.md) 에서 체크 안 된 맨 위 문제를 푼다.
+코딩테스트처럼 **문제 한 장 = 폴더 하나**. 오늘 뭘 할지 고르지 않는다 — [PROGRESS.md](PROGRESS.md) 의 일정표 순서대로 푼다.
 시작이 막히면 [MISTAKES.md](MISTAKES.md) 의 맨 윗줄들을 먼저 소리 내어 읽는다.
 
 ```
@@ -31,7 +31,7 @@ solutions/P001_safe_copy/
 | ① 백지 구현 | 10분 | `problem.md` 만 보고 `solution.c` 를 채운다. 막히면 HINT1 → HINT2 순서 |
 | ② 일부러 깨뜨리기 | 8분 | 일부러 틀린 버전(`strncpy` 그대로, `sizeof(c)`, `free` 순서 바꾸기…)을 만들어 `make P001` 이 잡아내는지 본다 |
 | ③ 노트와 비교 | 5분 | `NOTE.md` 와 원본 글, 필요하면 `make P001 ANS=1` 로 모범답안 채점 결과를 본다 |
-| ④ 한 줄 설명 | 7분 | NOTE 맨 아래 "한 줄 설명 연습"을 내 말로 쓴다. 틀린 건 MISTAKES.md 에 한 줄 추가, PROGRESS.md 체크 |
+| ④ 한 줄 설명 | 7분 | NOTE 맨 아래 "한 줄 설명 연습"을 내 말로 쓴다. 틀린 건 MISTAKES.md 에 한 줄 추가 |
 
 ```bash
 make P001              # drill/P001_*/solution.c 빌드 + 채점  (gcc -Wall -Wextra -Werror, ASan/UBSan/LSan)
@@ -45,7 +45,7 @@ make verify            # 전 문제 채점 가능성 검증 (모범답안 PASS +
 - `test.c` 가 `solution.c` 를 `#include` 하므로(매크로·`static` 도 시험할 수 있도록) 컴파일 단위는 `test.c` 하나다.
 - 변형 문제는 같은 문서에 섞지 않고 **새 번호의 문제**로 추가한다.
 
-- 문제 번호 구성: **P001–P037** C 기초(문자열·메모리·errno·파일·환경·시그널·동시성·바이트 순서·API), **P038–P045** 템플릿 체화 드릴 d0~d8(변형 A), **P046–P103** 시큐어코딩 체화 드릴 SD01~SD58(`P(45+SD번호)`), **P104–** 이론 글과 짝인 개념 드릴(P104 비동기 로거). 번호 순서가 학습 순서이고 목록은 [PROGRESS.md](PROGRESS.md).
+- 문제 번호 구성: **P001–P037** C 기초(문자열·메모리·errno·파일·환경·시그널·동시성·바이트 순서·API), **P038–P045** 템플릿 체화 드릴 d0–d8(변형 A), **P046–P103** 시큐어코딩 체화 드릴 SD01–SD58(`P(45+SD번호)`), **P104–** 이론 글과 짝인 개념 드릴(P104 비동기 로거). 번호 순서가 학습 순서이고 목록은 [PROGRESS.md](PROGRESS.md).
 - P038 이후(d*, sd*)는 기존 시험을 옮긴 것이라 출력이 `PASS` / `FAIL k` 형식이다(P001–P037 은 `PASS n/m`).
 - d*/sd* 문제는 타입·상수가 든 헤더와 (sd 는) Bad 함수·mock 이 **이미 문제 폴더에 있다**. 채울 곳은 `solution.c` 의 `TODO` 뿐.
 - P045(d8)는 `libjansson-dev` 가 필요하다(문제 폴더의 `ldlibs` 파일에 `-ljansson`). 없으면 그 문제만 빌드되지 않는다: `sudo apt install libjansson-dev`.

@@ -10,7 +10,7 @@
 > ```text
 > 옥텟  7 6 5 4 3 2 1 0   (비트 번호, MSB=7)
 > ──────────────────────────────────────────────────────────
->  0    │Ver(3) │ Type(5)         │   Ver 0~7, Type 0~31
+>  0    │Ver(3) │ Type(5)         │   Ver 0–7, Type 0–31
 >  1    │ Flags(8)                │   b0=URG b1=ACK b2=FRAG b3=ENC, b4~b7 예비
 >  2-3  │ PayloadLen (16, BE)     │   0 ~ 1400
 >  4-7  │ SessionId  (32, BE)     │
