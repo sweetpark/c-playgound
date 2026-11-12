@@ -148,8 +148,11 @@ int main(void)
 
 		gate_reset(0);                       /* 문 닫힘 = 소비자가 첫 줄에서 멈춘다 */
 		a = alog_create(10, sink, NULL);
+		alog_write(a, "line 0");             /* 첫 줄은 소비자가 꺼내 sink 에서 멈추게 한다 */
+		acc[nacc++] = 0;
+		CHECK(wait_deq(a, 1));               /* 소비자가 첫 줄을 쥔 것을 확인한 뒤에 채운다 (안 그러면 부하에 따라 결과가 달라진다) */
 		clock_gettime(CLOCK_MONOTONIC, &t0);
-		for (i = 0; i < 100; i++) {
+		for (i = 1; i < 100; i++) {
 			int r;
 			snprintf(buf, sizeof(buf), "line %d", i);
 			r = alog_write(a, buf);
